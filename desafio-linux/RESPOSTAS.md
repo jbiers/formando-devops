@@ -71,15 +71,18 @@ Conforme a dica falava sobre separadores de linha de outro sistema, utilizei o c
 
 ## 4. Systemd
 
-Identifique e corrija os erros na inicialização do servico `nginx`.
-Em seguida, execute o comando abaixo (exatamente como está) e apresente o resultado.
-Note que o comando não deve falhar.
+Ao rodar o comando `sudo systemctl start nginx`, recebi uma mensagem de erro. Ao investigar mais com `systemctl status nginx.service`, recebi uma mensagem mais detalhada que dizia `nginx: [emerg] invalid number of arguments in "root" directive in /etc/nginx/nginx.conf:45`. Percebi que existia um problema na linha 45 do arquivo nginx.conf. Ao abrir o arquivo com o vim, ficou claro que se tratava da falta de um ; para marcar o fim da linha.
+
+Tentei iniciar o nginx.service novamente, e encotrei dessa vez o erro `nginx: invalid option: "B”`. Abri então o arquivo /lib/systemd/system/nginx.service e removi a palavra extra que havia sido colocada.
+
+Dessa vez o nginx foi inicializado com sucesso, mas o curl retornava o erro `Failed to connect to 127.0.0.1 port 80: Connection refused`, indicando que o nginx estava rodando em uma porta diferente da padrão para o protocolo HTTP. Acessando o nginx.conf, confirmei a suspeita, pois as seguintes linhas estavam presentes:
 
 ```
-curl http://127.0.0.1
+listen       90 default_server;
+listen       [::]:90 default_server;
 ```
 
-Dica: para iniciar o serviço utilize o comando `systemctl start nginx`.
+Ao alterar para a porta padrão (80), e reiniciar o serviço, o comando curl exibiu com sucesso a seguinte mensagem: `Duas palavrinhas pra você: para, béns!`.
 
 ## 5. SSL
 
