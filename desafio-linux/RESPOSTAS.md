@@ -65,8 +65,9 @@ Então foi posssível acessar a VM com `ssh vagrant@192.168.100.50`.
 
 A chave do arquivo id_rsa-desafio-linux-devel.gz.b64 estava criptografada em base64, e foi preciso descriptografá-la com o comando `base64 -d id_rsa-desafio-linux-devel.gz.b64 > id_rsa-desafio-linux-devel.gz`. O arquivo agora estava apenas compactado. Descompactei com o comando `gunzip id_rsa-desafio-linux-devel.gz`.
 
-Em seguida foi preciso alterar as permissões da chave
+Em seguida foi preciso alterar as permissões da chave para de forma a deixá-las mais restritivas `chmod 400 id_rsa-desafio-linux-devel`. Ao tentar conectar na VM com o comando `ssh -i id_rsa-desafio-linux-devel devel@192.168.100.50`, não funcionou. Fui então verificar os logs do serviço sshd na VM `tail -f /var/log/secure`, e a mensagem de erro dizia que a chave estava em um formato inválido.
 
+Conforme a dica falava sobre separadores de linha de outro sistema, utilizei o comando `cat -e id_rsa-desafio-linux-devel` para exibir o conteúdo do arquivo incluindo os separadores de linha. Assim descobri que eram do tipo utilizado em sistemas Windows e fiz a conversão com o comando `dos2unix id_rsa-desafio-linux-devel`. Então, a conexão SSH funcionou.
 
 ## 4. Systemd
 
