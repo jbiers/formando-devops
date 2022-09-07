@@ -222,4 +222,9 @@ Crie uma partição LVM `sdb2` com `5Gi` e formate com o filesystem `ext4`.
 
 ### 7.3 Criar partição XFS
 
-Utilizando o disco `sdc` em sua todalidade (sem particionamento), formate com o filesystem `xfs`.
+Executei dois comandos:
+```
+yum install xfsprogs
+
+mkfs.xfs /dev/sdc
+```
