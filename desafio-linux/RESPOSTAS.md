@@ -105,15 +105,26 @@ curl https://www.desafio.local
 
 ### 6.1 Firewall
 
-Faço o comando abaixo funcionar:
-
-```
-ping 8.8.8.8
-```
+Comando ping funcionou perfeitamente.
 
 ### 6.2 HTTP
 
-Apresente a resposta completa, com headers, da URL `https://httpbin.org/response-headers?hello=world`
+```
+HTTP/2 200 
+date: Wed, 07 Sep 2022 20:33:51 GMT
+content-type: application/json
+content-length: 89
+server: gunicorn/19.9.0
+hello: world
+access-control-allow-origin: *
+access-control-allow-credentials: true
+
+{
+  "Content-Length": "89", 
+  "Content-Type": "application/json", 
+  "hello": "world"
+}
+```
 
 ## Logs
 
