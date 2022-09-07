@@ -117,7 +117,21 @@ Apresente a resposta completa, com headers, da URL `https://httpbin.org/response
 
 ## Logs
 
-Configure o `logrotate` para rotacionar arquivos do diretório `/var/log/nginx`
+Criei o arquivo `/etc/logrotate.d/nginx` e adicionei a ele as seguintes configurações, de forma a rotacionar os logs semanalmente com compressão de arquivos e guardá-los por 52 semanas:
+
+```
+/var/log/nginx/*.log {
+        weekly
+        missingok
+        rotate 52
+        compress
+        delaycompress
+        create 0640 root adm
+        sharedscripts
+}
+```
+
+O comando `sudo logrotate -f /etc/logrotate.d/nginx` permitiu forçar uma rotação para garantir que estava tudo funcionando como desejado.
 
 ## 7. Filesystem
 
