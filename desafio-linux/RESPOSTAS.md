@@ -214,11 +214,11 @@ O comando `sudo logrotate -f /etc/logrotate.d/nginx` permitiu forçar uma rotaç
 
 ### 7.1 Expandir partição LVM
 
-Aumente a partição LVM `sdb1` para `5Gi` e expanda o filesystem para o tamanho máximo.
+Aumentei o tamanho da partição /dev/sdb1 com o fdisk. Em seguida atualizei o tamanho do LV e com `resize2fs` expandi o filesystem.
 
 ### 7.2 Criar partição LVM
 
-Crie uma partição LVM `sdb2` com `5Gi` e formate com o filesystem `ext4`.
+Com fdisk criei a partição /dev/sdb2 com tipo LVM. Criei um VG correspondente e formatei com mkfs.ext4.
 
 ### 7.3 Criar partição XFS
 
