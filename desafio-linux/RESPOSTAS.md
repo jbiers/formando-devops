@@ -88,17 +88,83 @@ Ao alterar para a porta padrão (80), e reiniciar o serviço, o comando curl exi
 
 ### 5.1 Criação de certificados
 
-Utilizando o comando de sua preferencia (openssl, cfssl, etc...) crie uma autoridade certificadora (CA) para o hostname `desafio.local`.
-Em seguida, utilizando esse CA para assinar, crie um certificado de web server para o hostname `www.desafio.local`.
+Adicionei o  hostname desafio.local e www.desafio.local no arquivo /etc/hosts.
+
+Criei uma chave RSA chamada CA.key para a Certified Authority
+```
+openssl genrsa -out CA.key -des3 2048
+```
+
+Gerei uma CA local com o comando
+```
+openssl req -x509 -sha256 -new -nodes -days 3650 -key CA.key -out CA.pem
+```
+
+Criei um arquivo localhost.ext contendo o descrito abaixo:
+```
+authorityKeyIdentifier = keyid,issuer
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = localhost
+DNS.2 = desafio.local
+DNS.3 = www.desafio.local
+IP.1 = 127.0.0.1
+```
+
+Gerei outra chave para ser usada com o certificado
+```
+openssl genrsa -out localhost.key -des3 2048
+```
+
+Gerei o csr com
+```
+openssl req -new -key localhost.key -out localhost.csr
+```
+
+Por fim gerei o certificado usando todas as informações criadas anteriormente, e também descriptografei a chave
+```
+openssl x509 -req -in localhost.csr -CA CA.pem -CAkey CA.key -CAcreateserial -days 3650 -sha256 -extfile localhost.ext -out localhost.crt
+openssl rsa -in localhost.key -out localhost.decrypted.key
+```
+
+Temos, por fim, nossa chave de nome localhost.decrypted.key e o certificado localhost.crt.
 
 ### 5.2 Uso de certificados
 
-Utilizando os certificados criados anteriormente, instale-os no serviço `nginx` de forma que este responda na porta `443` para o endereço
-`www.desafio.local`. Certifique-se que o comando abaixo executa com sucesso e responde o mesmo que o desafio `4`. Voce pode inserir flags no comando
-abaixo para utilizar seu CA.
-
+Editei o conteúdo o /etc/nginx/nginx.conf para conter as configurações abaixo
 ```
-curl https://www.desafio.local
+server {
+        listen       443 ssl default_server;
+        listen       80;
+        server_name  desafio.local;
+        root         /usr/share/nginx/html;
+
+        ssl_certificate "/etc/ssl/desafio.local/localhost.crt";
+        ssl_certificate_key "/etc/ssl/desafio.local/localhost.decrypted.key";
+
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location / {
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+```
+
+Agora, após reiniciar o serviço do nginx, o comando curl pode ser executado com a flag -k para garantir que o self-signed certificate seja aceito.
+```
+curl -k https://www.desafio.local
 ```
 
 ## 6. Rede
