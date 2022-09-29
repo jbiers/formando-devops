@@ -65,6 +65,22 @@ Ela estará em outra Availability Zone dentro da mesma Region, e alterei o arqui
 
 ![image](https://user-images.githubusercontent.com/85142222/192918118-7daf673d-e145-4184-996a-e6962b8689b1.png)
 
+Em seguida, criei um Load Balancer selecionando ambas as Availability Zones usadas pelo VPC (us-east-1a e us-east-1b). O seu security group deve permitir entradas do tipo HTTP na porta 80 vindas de qualquer lugar, e saídas para o grupo de segurança das instâncias.
+
+![image](https://user-images.githubusercontent.com/85142222/192918376-adb7b68d-f7ee-4c22-a812-49ff6048b7fc.png)
+![image](https://user-images.githubusercontent.com/85142222/192918390-ebafc627-1ef6-412a-b026-cfdfe3722c40.png)
+
+O target group do Load Balancer deve apontar para as duas instâncias criadas, também na porta 80.
+
+É necessário permitir acesso do grupo de segurança do load balancer às EC2, alterando o Security Group delas da seguinte maneira:
+
+![image](https://user-images.githubusercontent.com/85142222/192918506-9222944b-6d6f-47f1-a8db-77053e7fb347.png)
+
+Enfim, temos os dois Targets do Load Balancer saudáveis e funcionando corretamente.
+
+![Screenshot from 2022-09-28 21-45-17](https://user-images.githubusercontent.com/85142222/192919609-c22e313b-c06a-47fb-bdc5-28f44e43c9b9.png)
+
+
 ## 6 - Segurança
 
 Foi necessário retirar a inbound rule das instâncias que permite entradas de qualquer lugar da internet. Manter apenas entradas HTTP vindas do Security Group do Load Balancer.
