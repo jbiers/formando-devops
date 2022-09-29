@@ -41,9 +41,17 @@ Assim, montei o volume da instância A na instância B, e copiei a lista de chav
 
 ## 4 - EC2 troubleshooting
 
-No último procedimento, A EC2 precisou ser desligada e após isso o serviço responsável pela página web não iniciou. Encontre o problema e realize as devidas alterações para que esse **serviço inicie automaticamente durante o boot** da EC2.
+Os seguintes comandos foram rodados na instância para permitir que o serviço *httpd* fosse inicializado durante após o boot da máquina:
 
+```
+sudo systemctl enable httpd
 
+sudo systemctl start httpd
+```
+
+Assim, mesmo após o reboot da máquina, consigo continuar a acessá-la normalmente.
+
+![image](https://user-images.githubusercontent.com/85142222/192917428-59fe8766-e4ba-4056-9ef3-2a5715b9a6f9.png)
 
 ## 5 - Balanceamento
 
