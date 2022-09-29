@@ -16,7 +16,7 @@ aws cloudformation wait stack-create-complete --stack-name "$STACK_NAME"
 
 ## 2 - Networking
 
-O Security Group da instância não estava permitindo acessos do tipo HTTP na porta 80. Criei um novo Security Group, dessa vez com as seguintes configurações:
+O Security Group da instância não estava permitindo acessos do tipo HTTP na porta 80. Na imagem abaixo é possível notar que permitia entradas em portas acima da 80, e vindas somente do ip 0.0.0.0. Para resolver o problema, criei um novo Security Group, dessa vez permitindo requisições à porta 80 vindas de qualquer local da internet.
 
 ![image](https://user-images.githubusercontent.com/85142222/192915748-db708039-db1b-42fa-b79a-68e93522e575.png)
 
@@ -24,18 +24,20 @@ Após isso, pude acessar a instância por meio do protocolo HTTP normalmente.
 
 ## 3 - EC2 Access
 
-Para acessar a EC2 por SSH, você precisa de uma *key pair*, que **não está disponível**. Pesquise como alterar a key pair de uma EC2.
+Primeiramente, verifiquei que no Security Group da instância não existia uma regra permitindo o recebimento de requisições na porta 22 do tipo SSH. Portanto, criei, de forma a permitir apenas que meu IP pessoal conseguisse este acesso.
 
-Após trocar a key pair
+Em seguida, para fazer com que a instância EC2 (vamos chamá-la de A) reconhecesse minha já existente chave "key.pem", criei uma nova instância (vamos chamá-la de B), que por padrão utiliza a chave key.pem.
 
-1 - acesse a EC2:
+Em seguida, desliguei a instância A, removi seu volume, e coloquei-o na instância B, à qual eu possuia acesso. Entrei na máquina B via SSH, e nela executei os seguintes comandos:
+
 ```
-ssh -i [sua-key-pair] ec2-user@[ip-ec2]
+sudo mount /dev/xvdf1 /mnt
+cp ~/.ssh/authorized_keys /mnt/home/ec2-user/.ssh/authorized_keys
 ```
 
-2 - Altere o texto da página web exibida, colocando seu nome no início do texto do arquivo ***"/var/www/html/index.html"***.
+Assim, montei o volume da instância A na instância B, e copiei a lista de chaves autorizadas da instância B para ele. Em seguida, desliguei a máquina B, removi o volume original da máquina A, e coloquei de volta nela. Assim, após ligá-la novamente, foi possível acessar a máquina A via SSH usando a chave key.pem:
 
-
+![image](https://user-images.githubusercontent.com/85142222/192916678-2e8b73e4-e182-4d4c-a7d2-8a9596a368f0.png)
 
 ## 4 - EC2 troubleshooting
 
