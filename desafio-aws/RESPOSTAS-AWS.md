@@ -61,4 +61,6 @@ Crie uma cópia idêntica de sua EC2 e inicie essa segunda EC2. Após isso, crie
 
 ## 6 - Segurança
 
-Garanta que o acesso para suas EC2 ocorra somente através do balanceador, ou seja, chamadas HTTP diretamente realizadas da sua máquina para o EC2 deverão ser barradas. Elas **só aceitarão chamadas do balanceador** e esse, por sua vez, aceitará conexões externas normalmente.
+Foi necessário retirar a inbound rule das instâncias que permite entradas de qualquer lugar da internet. Manter apenas entradas HTTP vindas do Security Group do Load Balancer.
+
+![image](https://user-images.githubusercontent.com/85142222/192917594-5d1bbf43-26ec-4679-8189-0e0b7e3db13b.png)
