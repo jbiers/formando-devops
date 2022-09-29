@@ -13,7 +13,6 @@ aws cloudformation create-stack --region us-east-1 --template-body "$STACK_FILE"
 aws cloudformation wait stack-create-complete --stack-name "$STACK_NAME"
 ```
 
-
 ## 2 - Networking
 
 O Security Group da instância não estava permitindo acessos do tipo HTTP na porta 80. Na imagem abaixo é possível notar que permitia entradas em portas acima da 80, e vindas somente do ip 0.0.0.0. Para resolver o problema, criei um novo Security Group, dessa vez permitindo requisições à porta 80 vindas de qualquer local da internet.
@@ -21,6 +20,7 @@ O Security Group da instância não estava permitindo acessos do tipo HTTP na po
 ![image](https://user-images.githubusercontent.com/85142222/192915748-db708039-db1b-42fa-b79a-68e93522e575.png)
 
 Após isso, pude acessar a instância por meio do protocolo HTTP normalmente.
+
 
 ## 3 - EC2 Access
 
@@ -39,6 +39,7 @@ Assim, montei o volume da instância A na instância B, e copiei a lista de chav
 
 ![image](https://user-images.githubusercontent.com/85142222/192916678-2e8b73e4-e182-4d4c-a7d2-8a9596a368f0.png)
 
+
 ## 4 - EC2 troubleshooting
 
 Os seguintes comandos foram rodados na instância para permitir que o serviço *httpd* fosse inicializado durante após o boot da máquina:
@@ -53,11 +54,16 @@ Assim, mesmo após o reboot da máquina, consigo continuar a acessá-la normalme
 
 ![image](https://user-images.githubusercontent.com/85142222/192917428-59fe8766-e4ba-4056-9ef3-2a5715b9a6f9.png)
 
+
 ## 5 - Balanceamento
 
-Crie uma cópia idêntica de sua EC2 e inicie essa segunda EC2. Após isso, crie um balanceador, configure ambas EC2 nesse balancedor e garanta que, **mesmo com uma das EC2 desligada, o usuário final conseguirá acessar a página web.**
+Para criar uma cópia da instância, é necessário primeiro criar uma AMI (Amazon Machine Image) dessa máquina. Então, basta fazer o launch de uma instância a partir da mesma AMI, no mesmo VPC e utilizando o mesmo Security Group. 
 
+![image](https://user-images.githubusercontent.com/85142222/192918072-d9d60ae3-b57e-428b-8d9e-9491468ac080.png)
 
+Ela estará em outra Availability Zone dentro da mesma Region, e alterei o arquivo **/var/www/html/index.html** de cada uma para não só a região, mas também a AZ de cada uma.
+
+![image](https://user-images.githubusercontent.com/85142222/192918118-7daf673d-e145-4184-996a-e6962b8689b1.png)
 
 ## 6 - Segurança
 
