@@ -50,12 +50,8 @@ Fazendo o commit do arquivo recém criado e dando o push para o repositório rem
 
 ![Screenshot from 2022-10-12 15-58-34](https://user-images.githubusercontent.com/85142222/195436155-fd300f84-b37c-4e00-a980-343fe5eadd99.png)
 
-7. Crie um pipeline no GitLab CI para fazer o deploy do site estático no GitLab Pages.
+Logo após fazer a merge da branch **feature** com a **main**, o job é executado novamente, fazendo o deploy das alterações.
 
-8. Faça o merge da branch "feature" para a branch "main".
+![Screenshot from 2022-10-12 16-00-20](https://user-images.githubusercontent.com/85142222/195436787-3662ba32-1ad0-4869-9f79-21a1a4bff344.png)
 
-9. Encontre o endereço do seu site no GitLab.
-
-10. Acesse a página inicial do seu projeto no Gitlab e verifique se o texto foi alterado.
-
-11. Adicione no arquivo [RESPOSTAS.md](RESPOSTAS.md) o link para o seu repositório e o log do git com o histórico de commits. Envie também um screenshot da Gitlab Page criada.
+ file:///home/julia/Screenshots/Screenshot%20from%202022-10-12%2016-00-48.png
