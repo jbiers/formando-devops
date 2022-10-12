@@ -44,6 +44,12 @@ Para criar o pipeline no GitLab CI, criei o arquivo **.gitlab-ci.yml** na branch
 
 ![Screenshot from 2022-10-12 15-49-10](https://user-images.githubusercontent.com/85142222/195434668-f5fe15bc-5b72-4741-b9f3-3fa9bb572fde.png)
 
+Fazendo o commit do arquivo recém criado e dando o push para o repositório remoto, o job é executado automaticamente. Em primeiro momento, ele falha, pois não havia feito a validação do cartão de crédito no GitLab. Após fazer isso, o job finaliza com sucesso e a página está disponível em https://juliabiersuriano.gitlab.io/desafio-gitlab/:
+
+![Screenshot from 2022-10-12 15-56-24](https://user-images.githubusercontent.com/85142222/195436027-86ef2a7d-1054-4b29-a99d-acd8b5e69be2.png)
+
+![Screenshot from 2022-10-12 15-58-34](https://user-images.githubusercontent.com/85142222/195436155-fd300f84-b37c-4e00-a980-343fe5eadd99.png)
+
 7. Crie um pipeline no GitLab CI para fazer o deploy do site estático no GitLab Pages.
 
 8. Faça o merge da branch "feature" para a branch "main".
