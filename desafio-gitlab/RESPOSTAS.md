@@ -54,4 +54,5 @@ Logo após fazer a merge da branch **feature** com a **main**, o job é executad
 
 ![Screenshot from 2022-10-12 16-00-20](https://user-images.githubusercontent.com/85142222/195436787-3662ba32-1ad0-4869-9f79-21a1a4bff344.png)
 
- file:///home/julia/Screenshots/Screenshot%20from%202022-10-12%2016-00-48.png
+![Screenshot from 2022-10-12 16-00-48](https://user-images.githubusercontent.com/85142222/195436895-a0ec79b3-c696-4daa-b34e-4cee1c32e4b8.png)
+
