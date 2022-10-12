@@ -40,6 +40,10 @@ Ao final da primeira parte, o estado do repositório é este:
 
 ### Segunda Parte (passos 07 ao 11)
 
+Para criar o pipeline no GitLab CI, criei o arquivo **.gitlab-ci.yml** na branch main, com os seguintes conteúdos:
+
+![Screenshot from 2022-10-12 15-49-10](https://user-images.githubusercontent.com/85142222/195434668-f5fe15bc-5b72-4741-b9f3-3fa9bb572fde.png)
+
 7. Crie um pipeline no GitLab CI para fazer o deploy do site estático no GitLab Pages.
 
 8. Faça o merge da branch "feature" para a branch "main".
