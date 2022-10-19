@@ -2,11 +2,15 @@
 
 1. Execute o comando `hostname` em um container usando a imagem `alpine`. Certifique-se que o container será removido após a execução.
 
-```
-docker run --rm alpine hostname
-```
+   ```
+   docker run --rm alpine hostname
+   ```
 
 2. Crie um container com a imagem `nginx` (versão 1.22), expondo a porta 80 do container para a porta 8080 do host.
+
+   ```
+   docker container create -p 8080:80 nginx:1.22.0
+   ```
 
 3. Faça o mesmo que a questão anterior (2), mas utilizando a porta 90 no container. O arquivo de configuração do nginx deve existir no host e ser read-only no container.
 
