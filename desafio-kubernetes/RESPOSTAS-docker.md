@@ -29,11 +29,11 @@
    docker image build .
    ```
   
-  Crie o container a partir da imagem
+   Crie o container a partir da imagem
   
-  ```
-  docker container create -p 8080:90 my-nginx
-  ```
+   ```
+   docker container create -p 8080:90 my-nginx
+   ```
 
 4. Construa uma imagem para executar o programa abaixo:
 
