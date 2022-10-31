@@ -48,4 +48,8 @@ if __name__ == '__main__':
 
 6. Qual o comando usado para limpar recursos como imagens, containers parados, cache de build e networks não utilizadas?
 
+   ```
+   docker system prune
+   ```
+
 7. Como você faria para extrair os comandos Dockerfile de uma imagem?
