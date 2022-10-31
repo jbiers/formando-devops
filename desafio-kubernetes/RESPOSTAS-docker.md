@@ -13,6 +13,26 @@
    ```
 
 3. Faça o mesmo que a questão anterior (2), mas utilizando a porta 90 no container. O arquivo de configuração do nginx deve existir no host e ser read-only no container.
+  
+  Tendo o arquivo *nginx.conf* definindo a porta de funcionamento como 90, crie um Dockerfile com as seguintes instruções:
+  
+  ```
+  FROM nginx
+  RUN rm /etc/nginx/conf.d/default.conf
+  COPY nginx.conf /etc/nginx/
+  EXPOSE 90
+  ```
+  Crie a imagem a partir desse Dockerfile
+  
+  ```
+  docker image build .
+  ```
+  
+  Crie o container a partir da imagem
+  
+  ```
+  docker container create -p 8080:90 my-nginx
+  ```
 
 4. Construa uma imagem para executar o programa abaixo:
 
