@@ -44,6 +44,28 @@
    if __name__ == '__main__':
    main()
    ```
+   
+   Tendo o código acima salvo em um arquivo de nome *main.py*, vamos criar o Dockerfile no mesmo diretório. O conteúdo do Dockerfile será:
+   
+   ```
+   FROM python:latest
+
+   ADD main.py .
+
+   CMD ["python", "./main.py"]
+   ```
+   
+   Em seguida, vamos criar a imagem a partir desse Dockerfile, utilizando o seguinte comando:
+   
+   ```
+   docker image build -t hello-python .
+   ```
+   
+   Em seguida basta rodar um container a partir da imagem gerada.
+   
+   ```
+   docker container run hello-python
+   ```
 
 5. Execute um container da imagem `nginx` com limite de memória 128MB e 1/2 CPU.
 
