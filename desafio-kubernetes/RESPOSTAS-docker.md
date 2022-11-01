@@ -54,3 +54,7 @@ if __name__ == '__main__':
    ```
 
 7. Como você faria para extrair os comandos Dockerfile de uma imagem?
+   
+   ```
+   docker history <IMAGE_NAME>
+   ```
