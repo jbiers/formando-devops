@@ -12,9 +12,39 @@
 
    Para rodar pods no node master, é necessário remover o taint NoSchedule. Usei o seguinte comando:
     
-    ```
     kubectl taint nodes kind-control-plane node-role.kubernetes.io/control-plane:NoSchedule-
-    ```
+   
+   Além disso, adicionei ao node master o label de *role=control-plane*, para poder referenciá-lo posteriormente:
+   
+    kubectl label nodes kind-control-plane role=control-plane
+   
+   Então, criei um arquivo de nome *meu-web.yaml* com o seguinte conteúdo:
+   
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+        labels:
+            app: meu-web
+         name: meu-web
+    spec:
+        replicas: 3
+        selector:
+            matchLabels:
+                app: meu-web
+        template:
+          metadata:
+            labels:
+              app: meu-web
+          spec:
+            nodeSelector:
+              role: control-plane
+            containers:
+            - image: nginx:1.16
+              name: nginx
+     
+     E por fim, criei o deployment usando as especificações do arquivo
+     
+      kubectl create -f meu-web.yaml
 
 5 - com uma unica linha de comando altere a imagem desse pod `meuweb` para `nginx:1.19` e salve o comando aqui no repositorio.
 
