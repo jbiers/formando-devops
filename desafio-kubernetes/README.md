@@ -101,7 +101,4 @@
 
 27 - qual o `kubectl get` que traz o status do scheduler, controller-manager e etcd ao mesmo tempo
 
-    ```
     kubectl get componentstatuses
-    ```
-
