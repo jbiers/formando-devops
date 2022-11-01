@@ -115,8 +115,14 @@
 17 - linhas de comando que;
 
     crie um namespace `cabeludo`;
-    um deploy chamado `cabelo` usando a imagem `nginx:latest`; 
+    kubectl create namespace cabeludo
+    
+    um deploy chamado `cabelo` usando a imagem `nginx:latest`;
+    kubectl create deployment cabelo --image nginx:latest
+    
     uma secret chamada `acesso` com as entradas `username: pavao` e `password: asabranca`;
+    kubectl create secret generic acesso --from-literal=username=pavao --from-literal=password=asabranca
+    
     exponha variaveis de ambiente chamados USUARIO para username e SENHA para a password.
 
 18 - crie um deploy `redis` usando a imagem com o mesmo nome, no namespace `cachehits` e que tenha o ponto de montagem `/data/redis` de um volume chamado `app-cache` que NÂO deverá ser persistente.
