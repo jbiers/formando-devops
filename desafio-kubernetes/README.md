@@ -10,7 +10,7 @@
 
 4 - crie um deploy chamado `meuweb` com a imagem `nginx:1.16` que seja executado exclusivamente no node master.
 
-    Para rodar pods no node master, é necessário remover o taint NoSchedule. Usei o seguinte comando:
+   Para rodar pods no node master, é necessário remover o taint NoSchedule. Usei o seguinte comando:
     
     ```
     kubectl taint nodes kind-control-plane node-role.kubernetes.io/control-plane:NoSchedule-
