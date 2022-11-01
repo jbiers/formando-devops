@@ -37,13 +37,13 @@
 
 4. Construa uma imagem para executar o programa abaixo:
 
-```python
-def main():
-   print('Hello World in Python!')
+   ```python
+   def main():
+      print('Hello World in Python!')
 
-if __name__ == '__main__':
-  main()
-```
+   if __name__ == '__main__':
+   main()
+   ```
 
 5. Execute um container da imagem `nginx` com limite de memória 128MB e 1/2 CPU.
 
