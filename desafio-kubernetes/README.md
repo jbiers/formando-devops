@@ -10,6 +10,12 @@
 
 4 - crie um deploy chamado `meuweb` com a imagem `nginx:1.16` que seja executado exclusivamente no node master.
 
+    Para rodar pods no node master, é necessário remover o taint NoSchedule. Usei o seguinte comando:
+    
+    ```
+    kubectl taint nodes kind-control-plane node-role.kubernetes.io/control-plane:NoSchedule-
+    ```
+
 5 - com uma unica linha de comando altere a imagem desse pod `meuweb` para `nginx:1.19` e salve o comando aqui no repositorio.
 
 6 - quais linhas de comando para instalar o ingress-nginx controller usando helm, com os seguintes parametros;
