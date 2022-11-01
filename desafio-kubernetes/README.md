@@ -42,7 +42,7 @@
             - image: nginx:1.16
               name: nginx
      
-    E por fim, criei o deployment usando as especificações do arquivo
+   E por fim, criei o deployment usando as especificações do arquivo
      
       kubectl create -f meu-web.yaml
 
