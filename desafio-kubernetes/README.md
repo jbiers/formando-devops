@@ -139,6 +139,8 @@
 
 23 - esvazie totalmente e de uma unica vez esse mesmo nó com uma linha de comando.
 
+    kubectl drain k8s-worker1
+
 24 - qual a maneira de garantir a criaçao de um pod ( sem usar o kubectl ou api do k8s ) em um nó especifico.
 
 25 - criar uma serviceaccount `userx` no namespace `developer`. essa serviceaccount só pode ter permissao total sobre pods (inclusive logs) e deployments no namespace `developer`. descreva o processo para validar o acesso ao namespace do jeito que achar melhor.
