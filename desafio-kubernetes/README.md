@@ -134,6 +134,8 @@
 21 - com uma linha de comando, descubra o conteudo da secret `piadas` no namespace `meussegredos` com a entrada `segredos`.
 
 22 - marque o node o nó `k8s-worker1` do cluster para que nao aceite nenhum novo pod.
+    
+    kubectl taint node k8s-worker1 true:NoSchedule
 
 23 - esvazie totalmente e de uma unica vez esse mesmo nó com uma linha de comando.
 
