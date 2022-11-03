@@ -159,6 +159,8 @@
 
 19 - com uma linha de comando escale um deploy chamado `basico` no namespace `azul` para 10 replicas.
 
+    kubectl scale deployment basico -n azul --replicas=10
+
 20 - com uma linha de comando, crie um autoscale de cpu com 90% de no minimo 2 e maximo de 5 pods para o deploy `site` no namespace `frontend`.
 
 21 - com uma linha de comando, descubra o conteudo da secret `piadas` no namespace `meussegredos` com a entrada `segredos`.
