@@ -68,7 +68,7 @@
    criar um deploy chamado `pombo` com a imagem de `nginx:1.11.9-alpine` com 4 réplicas
    
    ```
-   kubectl create deployment --image=nginx:1.11.9-alpine -r 3 pombo
+   kubectl create deployment --image=nginx:1.11.9-alpine -r  pombo
    ```
    
    alterar a imagem para `nginx:1.16` e registre na annotation automaticamente
