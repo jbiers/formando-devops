@@ -71,9 +71,24 @@
    kubectl create deployment --image=nginx:1.11.9-alpine -r 3 pombo
    ```
    
-   alterar a imagem para `nginx:1.16` e registre na annotation automaticamente;
-   alterar a imagem para 1.19 e registre novamente; 
-   imprimir a historia de alterações desse deploy;
+   alterar a imagem para `nginx:1.16` e registre na annotation automaticamente
+   
+   ```
+   kubectl set image deployments pombo nginx=1.16 --record
+   ```
+   
+   alterar a imagem para 1.19 e registre novamente
+   
+   ```
+   kubectl set image deployments pombo nginx=1.19 --record
+   ```
+   
+   imprimir a historia de alterações desse deploy
+   
+   ```
+   kubectl rollout history deployment pombo 
+   ```
+   
    voltar para versão 1.11.9-alpine baseado no historico que voce registrou.
    criar um ingress chamado `web` para esse deploy
 
