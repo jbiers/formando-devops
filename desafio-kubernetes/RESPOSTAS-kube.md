@@ -65,12 +65,17 @@
 
 7 - quais as linhas de comando para: 
 
-    criar um deploy chamado `pombo` com a imagem de `nginx:1.11.9-alpine` com 4 réplicas;
-    alterar a imagem para `nginx:1.16` e registre na annotation automaticamente;
-    alterar a imagem para 1.19 e registre novamente; 
-    imprimir a historia de alterações desse deploy;
-    voltar para versão 1.11.9-alpine baseado no historico que voce registrou.
-    criar um ingress chamado `web` para esse deploy
+   criar um deploy chamado `pombo` com a imagem de `nginx:1.11.9-alpine` com 4 réplicas
+   
+   ```
+   kubectl create deployment --image=nginx:1.11.9-alpine -r 3 pombo
+   ```
+   
+   alterar a imagem para `nginx:1.16` e registre na annotation automaticamente;
+   alterar a imagem para 1.19 e registre novamente; 
+   imprimir a historia de alterações desse deploy;
+   voltar para versão 1.11.9-alpine baseado no historico que voce registrou.
+   criar um ingress chamado `web` para esse deploy
 
 
 8 - linhas de comando para; 
