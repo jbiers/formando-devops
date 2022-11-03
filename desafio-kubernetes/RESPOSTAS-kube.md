@@ -153,9 +153,7 @@
     
    uma secret chamada `acesso` com as entradas `username: pavao` e `password: asabranca
    
-   ```
     kubectl create secret generic acesso --from-literal=username=pavao --from-literal=password=asabranca
-    ```
 
 18 - crie um deploy `redis` usando a imagem com o mesmo nome, no namespace `cachehits` e que tenha o ponto de montagem `/data/redis` de um volume chamado `app-cache` que NÂO deverá ser persistente.
 
