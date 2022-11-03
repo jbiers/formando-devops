@@ -165,6 +165,8 @@
 
 21 - com uma linha de comando, descubra o conteudo da secret `piadas` no namespace `meussegredos` com a entrada `segredos`.
 
+    kubectl get secret piadas -n meussegredos -o jsonpath='{.data.segredos}' | base64 --decode 
+
 22 - marque o node o nó `k8s-worker1` do cluster para que nao aceite nenhum novo pod.
     
     kubectl taint node k8s-worker1 true:NoSchedule
