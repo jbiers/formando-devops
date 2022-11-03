@@ -1,72 +1,8 @@
 # Desafio Kubernetes
 
-As questões abaixo devem ser respondidas no arquivo [RESPOSTAS-kube.md](RESPOSTAS-kube.md) em um fork desse repositório. Por ordem e numeradamente. O formato é livre, mas recomenda-se as linhas de comando utilizadas para criar ou alterar resources de cada questão na maioria dos casos. Quanto mais sucinto e direto, melhor. Envie o endereço do seu repositório para desafio@getupcloud.com.
-
-Ex. de respostas:
-
-### 1 - linha de comando para criar um resource x
-
-```bash
-    kubectl cria um resource x
-```
-
-ou
-
-### 2 - crie um resource y
-
-```yaml
-    apiVersion: xyz/v1
-    Kind: XYZ
-    metadata:
-      name: y
-      namespace: x
-    spec:
-    ....
-```
-
----
----
-
-## Caso precise de um kubernetes, segue uma dica rápida para a criação de um cluster kubernetes kind, no seu linux ou mac, ja com docker instalado.
-
-1 - tenha certeza que ja tenha docker instalado na sua maquina
-
-2 - baixe e instale o kind 
-
-```bash
-# Linux
-sudo curl -Lo /usr/local/bin/kind https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-linux-amd64
-sudo chmod +x /usr/local/bin/kind
-# MacOS
-sudo curl -Lo /usr/local/bin/kind  https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-arm64
-sudo chmod +x /usr/local/bin/kind
-```
-
-3 - salve e use esse arquivo abaixo para subir seu cluster, ele é um exemplo de como o kind é poderoso e pode te ajudar a subir um kubernetes rapido e facil
-
-```bash
-cat << EOF | kind create cluster --name meuk8s --config -
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-- role: worker
-  extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
-    protocol: TCP
-  - containerPort: 443
-    hostPort: 443
-    protocol: TCP
-EOF
-```
-
----
----
-
-## Bora começar !!!
-
 1 - com uma unica linha de comando capture somente linhas que contenham "erro" do log do pod `serverweb` no namespace `meusite` que tenha a label `app: ovo`.
+
+    kubectl logs -l app=ovo -n meusite serverweb | grep erro
 
 2 - crie o manifesto de um recurso que seja executado em todos os nós do cluster com a imagem `nginx:latest` com nome `meu-spread`, nao sobreponha ou remova qualquer taint de qualquer um dos nós.
 
@@ -74,7 +10,45 @@ EOF
 
 4 - crie um deploy chamado `meuweb` com a imagem `nginx:1.16` que seja executado exclusivamente no node master.
 
+   Para rodar pods no node master, é necessário remover o taint NoSchedule. Usei o seguinte comando:
+    
+    kubectl taint nodes kind-control-plane node-role.kubernetes.io/control-plane:NoSchedule-
+   
+   Além disso, adicionei ao node master o label de *role=control-plane*, para poder referenciá-lo posteriormente:
+   
+    kubectl label nodes kind-control-plane role=control-plane
+   
+   Então, criei um arquivo de nome *meu-web.yaml* com o seguinte conteúdo:
+   
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+        labels:
+            app: meu-web
+         name: meu-web
+    spec:
+        replicas: 3
+        selector:
+            matchLabels:
+                app: meu-web
+        template:
+          metadata:
+            labels:
+              app: meu-web
+          spec:
+            nodeSelector:
+              role: control-plane
+            containers:
+            - image: nginx:1.16
+              name: nginx
+     
+   E por fim, criei o deployment usando as especificações do arquivo
+     
+      kubectl create -f meu-web.yaml
+
 5 - com uma unica linha de comando altere a imagem desse pod `meuweb` para `nginx:1.19` e salve o comando aqui no repositorio.
+
+    kubectl set image deployments meu-web nginx=nginx:1.19
 
 6 - quais linhas de comando para instalar o ingress-nginx controller usando helm, com os seguintes parametros;
 
@@ -140,10 +114,23 @@ EOF
 
 17 - linhas de comando que;
 
-    crie um namespace `cabeludo`;
-    um deploy chamado `cabelo` usando a imagem `nginx:latest`; 
-    uma secret chamada `acesso` com as entradas `username: pavao` e `password: asabranca`;
-    exponha variaveis de ambiente chamados USUARIO para username e SENHA para a password.
+  crie um namespace`cabeludo`
+  
+  ```
+    kubectl create namespace cabeludo
+  ```
+    
+   um deploy chamado `cabelo` usando a imagem `nginx:latest`
+   
+   ```
+    kubectl create deployment cabelo --image nginx:latest
+   ```
+    
+   uma secret chamada `acesso` com as entradas `username: pavao` e `password: asabranca
+   
+   ```
+    kubectl create secret generic acesso --from-literal=username=pavao --from-literal=password=asabranca
+    ```
 
 18 - crie um deploy `redis` usando a imagem com o mesmo nome, no namespace `cachehits` e que tenha o ponto de montagem `/data/redis` de um volume chamado `app-cache` que NÂO deverá ser persistente.
 
@@ -154,8 +141,12 @@ EOF
 21 - com uma linha de comando, descubra o conteudo da secret `piadas` no namespace `meussegredos` com a entrada `segredos`.
 
 22 - marque o node o nó `k8s-worker1` do cluster para que nao aceite nenhum novo pod.
+    
+    kubectl taint node k8s-worker1 true:NoSchedule
 
 23 - esvazie totalmente e de uma unica vez esse mesmo nó com uma linha de comando.
+
+    kubectl drain k8s-worker1
 
 24 - qual a maneira de garantir a criaçao de um pod ( sem usar o kubectl ou api do k8s ) em um nó especifico.
 
@@ -164,3 +155,5 @@ EOF
 26 - criar a key e certificado cliente para uma usuaria chamada `jane` e que tenha permissao somente de listar pods no namespace `frontend`. liste os comandos utilizados.
 
 27 - qual o `kubectl get` que traz o status do scheduler, controller-manager e etcd ao mesmo tempo
+
+    kubectl get componentstatuses
