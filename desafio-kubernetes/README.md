@@ -114,7 +114,7 @@
 
 17 - linhas de comando que;
 
-   crie um namespace `cabeludo`
+  crie um namespace`cabeludo`
     kubectl create namespace cabeludo
     
    um deploy chamado `cabelo` usando a imagem `nginx:latest`
