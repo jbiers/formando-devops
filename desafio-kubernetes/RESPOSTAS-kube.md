@@ -90,6 +90,11 @@
    ```
    
    voltar para versão 1.11.9-alpine baseado no historico que voce registrou.
+   
+   ```
+   kubectl rollout undo deployment pombo --to-revision=1
+   ```
+   
    criar um ingress chamado `web` para esse deploy
 
 
